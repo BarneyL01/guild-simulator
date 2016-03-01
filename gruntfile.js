@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         connect: {
             server: {
                 options: {
-                    port: 8080,
+                    port: 3000,
                     base: './'
                 }
             }
@@ -25,9 +25,32 @@ module.exports = function (grunt) {
                 }
             }
         },
+        tsc: {
+            options: {
+                // global options 
+                "target": "es5",
+                "module": "system",
+                "moduleResolution": "node",
+                "sourceMap": true,
+                "emitDecoratorMetadata": true,
+                "experimentalDecorators": true,
+                "removeComments": false,
+                "noImplicitAny": false
+            },
+            task_name: {
+                options: {
+                    // task options 
+                },
+                "exclude": [
+                    "typings/browser.d.ts",
+                    "typings/browser",
+                    "node_modules"
+                ]
+            }
+        },
         watch: {
             files: '**/*.ts',
-            tasks: ['typescript']
+            tasks: ['tsc']
         },
         open: {
             dev: {
