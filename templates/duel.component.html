@@ -1,0 +1,58 @@
+<h3>Duel Result</h3>
+
+<div class="columnsContainer">
+    <div class="leftColumn">
+        <select #select1 *ngIf="heroesByrank" [ngModel]="heroesByrank" (change)="setHero(1, $event.target.value)">
+            <option *ngFor="#hero of heroesByrank" [value]="hero.id">{{hero.name}}</option>
+        </select>
+        <select #select2 *ngIf="heroesByrank" [ngModel]="heroesByrank" (change)="setHero(2, $event.target.value)">
+            <option *ngFor="#hero of heroesByrank" [value]="hero.id">{{hero.name}}</option>
+        </select>
+        <div>Duel between:
+             <span *ngIf="selectedHero1" class="hero1name" > 
+                 {{selectedHero1.name}}</span> 
+             <span *ngIf="selectedHero1 && selectedHero2">and </span>
+            <span *ngIf="selectedHero2" class="hero2name">{{selectedHero2.name}}</span>
+        </div>
+        <div>
+        <button (click)="startFight()">Start Fight</button>
+        </div>
+        <br>
+        
+        <div *ngIf="duelError">Problem with duel:
+            <div *ngIf="heroUnselected">Problem, one or both heroes not selected.</div>
+            <div *ngIf="sameHeroSelected">Problem, duel of the same hero ?!</div>
+            <div *ngIf="selectedHero1IsDead">Problem, {{selectedHero1.name}} is dead.</div>
+            <div *ngIf="selectedHero2IsDead">Problem, {{selectedHero2.name}} is dead.</div>
+        </div>
+        
+        <!--Fight Commentary text:-->
+        <!--<div *ngIf="fightStarted">-->
+            <fight-component #fightComponent></fight-component>
+        <!--</div>-->
+    </div>
+
+    <div class="rightcolumn rankings">
+        <div>
+        Reset HP: <button (click)="resetHp()">Reset</button>
+        </div>
+    <ul class="heroes">
+        <li *ngFor="#hero of heroesByrank">
+            <!--*ngIf="hero.rank"-->
+            <span  class="badge">Rank: {{hero.rank}}</span> 
+                <span class="heroName">{{hero.name}} <br> <span class="hitpoints">HP: {{hero.hitPoints}}/{{hero.maxHitPoints}}</span> </span> 
+                <!--*ngIf="hero.duelWins != null && hero.duelLosses != null" -->
+                <span class="status">
+                    Wins: {{hero.duelWins}} Losses:{{hero.duelLosses}}</span> 
+        </li>
+
+    </ul>
+    </div>
+
+</div>
+<div class="columnsContainer">
+    <div class="leftColumn">
+        
+    </div>
+    
+</div>

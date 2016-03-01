@@ -1,6 +1,5 @@
 module.exports = function (grunt) {
-    grunt.loadNpmTasks('grunt-typescript');
-    grunt.loadNpmTasks("grunt-tsc");
+    grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-open');
@@ -15,42 +14,24 @@ module.exports = function (grunt) {
                 }
             }
         },
-        typescript: {
+        // https://www.npmjs.com/package/grunt-ts
+        ts: {
             base: {
-                src: ['app/**/*.ts'],
-                dest: 'js/',
+                src: ['app/src/**/*.ts', 'typings'],
+                dest: 'app/dist',
                 options: {
-                    module: 'system',
-                    target: 'es5'
+                module: 'system', 
+                moduleResolution: 'node',
+                target: 'es5',
+                experimentalDecorators: true,
+                emitDecoratorMetadata: true,
+                noImplicitAny: false
                 }
             }
         },
-        tsc: {
-            options: {
-                // global options 
-                "target": "es5",
-                "module": "system",
-                "moduleResolution": "node",
-                "sourceMap": true,
-                "emitDecoratorMetadata": true,
-                "experimentalDecorators": true,
-                "removeComments": false,
-                "noImplicitAny": false
-            },
-            task_name: {
-                options: {
-                    // task options 
-                },
-                "exclude": [
-                    "typings/browser.d.ts",
-                    "typings/browser",
-                    "node_modules"
-                ]
-            }
-        },
         watch: {
-            files: '**/*.ts',
-            tasks: ['tsc']
+            files: ['app/src/**/*.ts', '**/*.html', '**/*.css'],
+            tasks: ['ts']
         },
         open: {
             dev: {
@@ -59,6 +40,6 @@ module.exports = function (grunt) {
         }
     });
  
-    grunt.registerTask('default', ['connect', 'open', 'watch']);
+    grunt.registerTask('default', ['ts', 'connect', 'open', 'watch']);
  
 }

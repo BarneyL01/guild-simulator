@@ -1,0 +1,79 @@
+<h3>Dungeon 2</h3>
+<div *ngIf="!guild">Loading Guild...</div>
+<div class="columnsContainer" *ngIf="guild && heroes">
+    <div class="leftColumn">
+        <select #selectHero 
+                *ngIf="heroes" 
+                [disabled]="dungeonStarted" 
+                [ngModel]="heroes" 
+                (change)="setHero($event.target.value)">
+            <option *ngFor="#hero of heroes" [value]="hero.id">{{hero.name}}</option>
+        </select>
+
+        <select #selectDungeon 
+                [disabled]="dungeonStarted" 
+                [ngModel]="dungeons" 
+                (change)="setDungeon($event.target.value)">
+            <option *ngFor="#dungeon of dungeons" [value]="dungeon.id">{{dungeon.name}}</option>
+        </select>
+        <div>Send 
+             <span *ngIf="selectedHero" > 
+                 {{selectedHero.name}}</span>  
+                 into the dungeon!
+        </div>
+        <div>
+            <button (click)="startDungeon()">Go into dungeon</button>
+        </div>
+        <br>
+        
+        <div *ngIf="enterDungeonError">Problem with heading into the dungeon:
+            <div *ngIf="heroUnselected">Hero not selected.</div>
+            <div *ngIf="selectedHeroIsDead">{{selectedHero.name}} is dead.</div>
+            <div *ngIf="dungeonUnselected">Dungeon not selected.</div>
+        </div>
+    </div>  
+    
+    <div class="rightColumn">
+        Fight til 10% or 2HP.(need to change this to selectable rule)
+        <div *ngIf="guild">
+           Guild gold: ${{guild.gold}}
+        </div>    
+        <br>
+        <div *ngIf="(monstersFought.length > 0)">
+            Monsters Fought:
+            <ul  >
+                <li *ngFor="#monster of monstersFought">
+                    Fought: {{monster.string}} (had {{monster.value}} gold).
+                </li>
+
+            </ul>
+        </div>
+            
+        <br>
+        <div *ngIf="selectedDungeon && dungeonMonsters">
+        Monsters found in {{selectedDungeon.name}}:
+        <ul>
+            <li *ngFor="#monster of dungeonMonsters">
+                ({{monster.id}}) [lvl{{monster.level}}] {{monster.name}} - {{monster.hitPoints}}/ {{monster.maxHitPoints}} 
+            </li>
+
+        </ul>
+        </div>
+    </div>
+    
+    <div class="leftColumn">
+        <div *ngIf="dungeonStarted">Dungeon Entered</div>
+        <div *ngIf="activeMonster">
+            <div>Encountered: {{activeMonster.name}} (level {{activeMonster.level}}) </div>
+            <div><label>id: </label>{{activeMonster.id}}</div>
+        </div>
+        <!--Fight Commentary text:-->
+        <fight-component #fightComponent></fight-component>
+        
+        <div *ngIf="selectedHeroIsDead">{{selectedHero.name}} has died.</div>
+        <div *ngIf="fightResult && !selectedHeroIsDead">
+            <div *ngIf="fightResult.heroFled">{{selectedHero.name}} has fled the dungeon.</div>
+        </div>
+        <div *ngIf="!selectedHeroIsDead && goldGained > 0">{{selectedHero.name}} gained {{goldGained}} for the guild.</div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div *ngIf="hero">
+    <h2>{{hero.name}} details!</h2>
+    <div>
+        <label>id: </label>{{hero.id}}</div>
+    <div>
+        <label>name: </label>
+        <input [(ngModel)]="hero.name" placeholder="name" />
+    </div>
+    <div>
+        <label>strength: </label>{{hero.strength}}</div>
+    <div>
+    <div>
+        <label>dexterity: </label>{{hero.dexterity}}</div>
+    <div>
+    <div>
+        <label>Current HP: </label>{{hero.hitPoints}}</div>
+    <div>
+    <div>
+        <label>Max HP: </label>{{hero.maxHitPoints}}</div>
+    <div>
+    <div>
+        <label>Attack Speed: </label>{{hero.attackSpeed}}</div>
+    <div>
+    <div>
+        <label>Level: </label>{{hero.level}}</div>
+    <div>
+    <div>
+        <label>Experience Points: </label>{{hero.experience}}</div>
+    <div>
+    <div *ngIf="hero.duelWins != null">
+        <label>Wins (duel): </label>{{hero.duelWins}}</div>
+    <div>        
+    <div *ngIf="hero.duelLosses != null">
+        <label>Losses (duel): </label>{{hero.duelLosses}}</div>
+    <div>        
+    <div *ngIf="hero.rank  != null">
+        <label>rank: </label>{{hero.rank}}</div>
+    <div>  
+                
+    <div *ngIf="showBack"><button (click)="goBack()">Back</button></div>
+</div>
