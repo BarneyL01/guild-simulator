@@ -6,6 +6,7 @@ module.exports = function (grunt) {
  
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        // https://github.com/gruntjs/grunt-contrib-connect
         connect: {
             server: {
                 options: {
